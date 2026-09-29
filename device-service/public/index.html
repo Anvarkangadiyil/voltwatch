@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VoltWatch Dashboard</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="bar">
+    <h1 id="deviceName">VoltWatch</h1>
+    <span id="conn" class="pill pill--off">Offline</span>
+    <span id="mode" class="pill">--</span>
+  </header>
+
+  <main>
+    <section class="alarms" id="alarms" hidden></section>
+
+    <section class="battery card">
+      <div class="battery__head">
+        <h2>Battery</h2>
+        <span><strong id="batteryPercent">--</strong>% · <span id="runtime">--</span> min left</span>
+      </div>
+      <div class="meter"><div class="meter__fill" id="batteryFill"></div></div>
+    </section>
+
+    <section class="grid">
+      <div class="card stat"><span class="stat__label">Input</span><span class="stat__value"><b id="inputVoltage">--</b> V</span></div>
+      <div class="card stat"><span class="stat__label">Output</span><span class="stat__value"><b id="outputVoltage">--</b> V</span></div>
+      <div class="card stat"><span class="stat__label">Load</span><span class="stat__value"><b id="loadPercent">--</b> %</span></div>
+      <div class="card stat"><span class="stat__label">Frequency</span><span class="stat__value"><b id="frequencyHz">--</b> Hz</span></div>
+      <div class="card stat"><span class="stat__label">Temperature</span><span class="stat__value"><b id="temperatureC">--</b> °C</span></div>
+      <div class="card stat"><span class="stat__label">Last self-test</span><span class="stat__value"><b id="selfTest">--</b></span></div>
+    </section>
+
+    <section class="card">
+      <h2>Configuration</h2>
+      <form id="configForm" class="form">
+        <label>Device name <input name="deviceName" maxlength="32" required></label>
+        <label>Low battery alarm (%) <input name="lowBatteryThreshold" type="number" min="5" max="50" required></label>
+        <label>Overload alarm (%) <input name="overloadThreshold" type="number" min="50" max="100" required></label>
+        <label>Telemetry interval (ms) <input name="telemetryIntervalMs" type="number" min="250" max="10000" step="250" required></label>
+        <label class="check"><input name="buzzerEnabled" type="checkbox"> Audible alarm</label>
+        <div class="form__actions">
+          <button type="submit">Save</button>
+          <span id="formMsg" role="status"></span>
+        </div>
+      </form>
+    </section>
+
+    <section class="card actions">
+      <h2>Actions</h2>
+      <button id="selfTestBtn" type="button">Run self-test</button>
+      <button id="outageBtn" type="button" class="secondary">Simulate 20 s outage</button>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

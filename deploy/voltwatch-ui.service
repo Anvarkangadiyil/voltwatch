@@ -1,0 +1,19 @@
+# /etc/systemd/system/voltwatch-ui.service
+# Kiosk UI rendered straight to the display via flutter-pi (DRM/KMS),
+# with no X11 or Wayland compositor on the device.
+[Unit]
+Description=VoltWatch kiosk UI
+After=voltwatch-device.service
+Wants=voltwatch-device.service
+
+[Service]
+Type=simple
+User=voltwatch
+# Needs access to /dev/dri and /dev/input for display and touch.
+SupplementaryGroups=video input render
+ExecStart=/usr/local/bin/flutter-pi --release /opt/voltwatch/ui
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

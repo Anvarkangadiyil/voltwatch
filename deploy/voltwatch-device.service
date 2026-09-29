@@ -1,0 +1,23 @@
+# /etc/systemd/system/voltwatch-device.service
+# Device service: REST + WebSocket API and the web config dashboard.
+[Unit]
+Description=VoltWatch device service
+After=network.target
+
+[Service]
+Type=simple
+User=voltwatch
+WorkingDirectory=/opt/voltwatch/device-service
+Environment=PORT=8080
+ExecStart=/usr/bin/node src/server.js
+Restart=on-failure
+RestartSec=2
+# Keep the service inside a small, predictable memory budget.
+MemoryMax=96M
+Environment=NODE_OPTIONS=--max-old-space-size=48
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target
